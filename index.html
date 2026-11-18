@@ -6,6 +6,10 @@
 <title>Compra Directa DSM · Tienda de artículos nuevos y usados</title>
 <meta name="description" content="Compra directa, soluciones confiables. Tecnología, hogar, mascotas y más: artículos nuevos y usados.">
 <meta name="theme-color" content="#1e5bff">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Compra Directa DSM · Nuevos y usados">
+<meta property="og:description" content="Mira fotos, características y precios. Compra directa por WhatsApp, con opción de domicilio.">
+<meta property="og:locale" content="es_CO">
 <style>
 :root{--brand:#1e5bff;--brand2:#0f3fd1;--sun:#ffc83d;--bg:#f3f5fa;--card:#fff;--txt:#1c2433;--mut:#6b7790;--line:#e4e8f1;--ok:#16a34a;--wa:#22c55e;--bad:#e11d48;--warn:#f59e0b;--r:14px;--sh:0 2px 10px rgba(28,36,51,.07)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -180,6 +184,52 @@ footer b{color:var(--txt)}
 footer .fl{display:flex;gap:14px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
 footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
 
+/* ===== Redes + favoritos ===== */
+.ic{width:1em;height:1em;fill:currentColor;display:block}
+.soc{display:flex;gap:8px}
+.soc a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:20px;text-decoration:none;transition:transform .15s}
+.soc a:hover{transform:translateY(-2px) scale(1.08)}
+.soc .wa{background:#25D366}
+.soc .ig{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)}
+.soc .fb{background:#1877F2}
+.soc .tt{background:#010101;box-shadow:-2px -2px 0 #25f4ee,2px 2px 0 #fe2c55}
+.topsoc{margin-left:0}
+.topwa .ic{flex-shrink:0}
+.favbtn{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:10px 15px;font-weight:800;font-size:.95rem;display:flex;gap:6px;align-items:center}
+.favbtn:hover{background:rgba(255,255,255,.3)}
+.fav{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.95);box-shadow:0 1px 6px rgba(0,0,0,.2);display:grid;place-items:center;font-size:18px;line-height:1;color:#b6bfd0;z-index:3}
+.fav.on{color:#e11d48}
+.favrow{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.favrow img,.favrow .ph{width:56px;height:56px;border-radius:10px;object-fit:cover;background:#eef1f7;flex:0 0 auto}
+.favrow .fi{flex:1;min-width:0;font-size:.88rem}
+.favrow .fi b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.favrow .fi span{color:var(--mut)}
+.favrow .rm{border:0;background:#f1f3f8;border-radius:50%;width:30px;height:30px;font-size:1rem}
+.favtot{display:flex;justify-content:space-between;padding:14px 0 10px;font-size:1rem}
+@media(max-width:1020px){.topsoc{display:none}}
+
+/* ===== Domicilio, compartir, reseñas ===== */
+.crow{margin-top:auto;display:flex;gap:6px}
+.crow .cwa{flex:1;margin-top:0}
+.cshare{width:40px;border:0;border-radius:10px;background:#eef1f7;color:var(--mut);display:grid;place-items:center;font-size:17px;flex:0 0 auto}
+.cshare:hover{background:#e0e6f2;color:var(--brand)}
+.dlv{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.88rem;background:#fafbff}
+.dmode{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dmode button{padding:9px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:.85rem}
+.dmode button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.daddr{padding:10px 12px;border:1px solid var(--line);border-radius:10px;outline:0;width:100%;background:#fff}
+.daddr:focus{border-color:var(--brand)}
+.shrow{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--mut);font-weight:600}
+.shi{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:18px;border:0;background:#64748b;text-decoration:none}
+.shi.wa{background:#25D366}.shi.fb{background:#1877F2}
+.rh{font-size:1.2rem;margin:26px 0 12px}
+.revrow{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity}
+.rev{flex:0 0 280px;background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:14px;display:flex;flex-direction:column;gap:8px;scroll-snap-align:start}
+.rev img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+.rev .stars{color:#f59e0b;letter-spacing:2px}
+.rev p{font-size:.9rem;color:#394258}
+.rdel{align-self:flex-start;border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 10px;font-size:.75rem;color:var(--bad)}
+
 /* ===== Responsive ===== */
 @media(max-width:899px){
  .layout{grid-template-columns:1fr}
@@ -193,7 +243,7 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
 }
 @media(max-width:720px){
  .trow{flex-wrap:wrap;gap:10px}
- .logo{order:1}.topwa{order:2;margin-left:auto}
+ .logo{order:1}.favbtn{order:2;margin-left:auto}.topwa{order:2}
  .sbar{order:3;flex:1 1 100%;max-width:none}
  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
  .cb{padding:10px}.pr b{font-size:1.1rem}
@@ -213,11 +263,26 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
 </head>
 <body>
 
+<!-- Íconos originales de redes -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.525 3.488"/></symbol>
+ <symbol id="i-ig" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></symbol>
+ <symbol id="i-share" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></symbol>
+ <symbol id="i-fb" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></symbol>
+ <symbol id="i-tt" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+</svg>
+
 <header class="top">
  <div class="wrap trow">
   <a class="logo" id="logo" href="#" role="button"><span class="lg">🛍️</span><span><b>Compra Directa</b><i>DSM · Nuevos y usados</i></span></a>
   <form class="sbar" id="sform"><input id="q" type="search" placeholder="Buscar celulares, hogar, mascotas..." autocomplete="off"><button type="submit" aria-label="Buscar">🔍</button></form>
-  <a class="topwa" href="https://wa.me/573059007473" target="_blank" rel="noopener">💬 <span>305 900 7473</span></a>
+  <button class="favbtn" id="favBtn" aria-label="Mis favoritos">♥ <span id="favN">0</span></button>
+  <div class="soc topsoc">
+   <a class="ig" href="https://instagram.com/compradirectadsm" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ic"><use href="#i-ig"/></svg></a>
+   <a class="fb" href="https://www.facebook.com/share/1J6D3iMdPd/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ic"><use href="#i-fb"/></svg></a>
+   <a class="tt" href="https://www.tiktok.com/@compradirectadsm" target="_blank" rel="noopener" aria-label="TikTok"><svg class="ic"><use href="#i-tt"/></svg></a>
+  </div>
+  <a class="topwa" href="https://wa.me/573059007473" target="_blank" rel="noopener"><svg class="ic" style="font-size:20px"><use href="#i-wa"/></svg> <span>305 900 7473</span></a>
  </div>
  <div class="cats"><div class="wrap catrow" id="cats"></div></div>
 </header>
@@ -276,12 +341,23 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
  </div>
 </main>
 
+<section class="wrap" id="revSec" style="display:none">
+ <h2 class="rh">⭐ Lo que dicen nuestros clientes</h2>
+ <div class="revrow" id="revRow"></div>
+</section>
+
 <footer>
  <div class="wrap">
+  <div style="font-weight:800;color:var(--txt);margin-bottom:10px">Síguenos en redes</div>
+  <div class="soc" style="justify-content:center;margin-bottom:14px">
+   <a class="wa" href="https://wa.me/573059007473" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+   <a class="ig" href="https://instagram.com/compradirectadsm" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ic"><use href="#i-ig"/></svg></a>
+   <a class="fb" href="https://www.facebook.com/share/1J6D3iMdPd/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ic"><use href="#i-fb"/></svg></a>
+   <a class="tt" href="https://www.tiktok.com/@compradirectadsm" target="_blank" rel="noopener" aria-label="TikTok"><svg class="ic"><use href="#i-tt"/></svg></a>
+  </div>
   <div class="fl">
-   <a href="https://wa.me/573059007473" target="_blank" rel="noopener">💬 WhatsApp 305 900 7473</a>
-   <a href="https://instagram.com/compradirectadsm" target="_blank" rel="noopener">📷 Instagram</a>
-   <a href="mailto:contacto@compradirectadsm.com">✉️ Correo</a>
+   <a href="https://wa.me/573059007473" target="_blank" rel="noopener">WhatsApp 305 900 7473</a>
+   <a href="mailto:contacto@compradirectadsm.com">✉️ contacto@compradirectadsm.com</a>
   </div>
   © <span id="yr"></span> <b>Compra Directa DSM</b> · Compra directa, soluciones confiables<br>Desarrollado por Ing. Edisson Macías Quevedo
  </div>
@@ -308,7 +384,9 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
   <button class="x" data-close>&times;</button>
   <h2>📊 Panel de inventario</h2>
   <div class="stats" id="stats"></div>
+  <div id="topv"></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
+   <button class="btn" id="btnRev">⭐ Agregar reseña de cliente</button>
    <button class="btn" id="btnCsv">📥 Exportar inventario (CSV)</button>
    <button class="btn" id="btnOpt">⚡ Optimizar imágenes antiguas</button>
   </div>
@@ -335,6 +413,8 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
    </div>
    <div class="f" id="qWrap" style="display:none"><label>Estado físico (usados)</label>
     <select id="pQual"><option value="5">Excelente</option><option value="4">Muy bueno</option><option value="3">Bueno</option><option value="2">Regular</option></select></div>
+   <div class="f"><label class="opt" style="font-size:.9rem;color:var(--txt);font-weight:700"><input type="checkbox" id="pDeliv" checked> 🚚 Este producto tiene domicilio</label>
+    <input id="pDelivNote" maxlength="120" placeholder="Ej: Domicilio en Bogotá, costo $8.000 (opcional)"></div>
    <div class="f"><label>Características (una por línea, formato Clave: valor)</label>
     <textarea id="pChars" placeholder="Marca: Hikvision&#10;Resolución: 2MP&#10;Garantía: 3 meses&#10;Incluye: cargador y caja"></textarea></div>
    <div class="f"><label>Descripción</label><textarea id="pDesc" maxlength="2000" placeholder="Cuenta el estado, detalles, motivo de venta..."></textarea></div>
@@ -350,6 +430,28 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
 
 <!-- Detalle -->
 <div class="modal" id="mDet"><div class="box wide"><button class="x" data-close>&times;</button><div class="det" id="detBody"></div></div></div>
+
+<!-- Favoritos -->
+<div class="modal" id="mFav"><div class="box">
+ <button class="x" data-close>&times;</button>
+ <h2>♥ Mis favoritos</h2>
+ <div id="favList"></div><div id="favFoot"></div>
+</div></div>
+
+<!-- Nueva reseña (admin) -->
+<div class="modal" id="mRev"><div class="box">
+ <button class="x" data-close>&times;</button>
+ <h2>⭐ Nueva reseña de cliente</h2>
+ <p class="hint" style="margin-bottom:12px">Publica solo opiniones reales de tus clientes.</p>
+ <form id="fRev">
+  <div class="f"><label>Nombre del cliente</label><input id="rName" required maxlength="60" placeholder="Ej: Carlos P., Bogotá"></div>
+  <div class="f"><label>Opinión</label><textarea id="rText" required maxlength="400"></textarea></div>
+  <div class="f"><label>Calificación</label><select id="rStars"><option value="5">★★★★★ (5)</option><option value="4">★★★★ (4)</option><option value="3">★★★ (3)</option></select></div>
+  <div class="f"><label>Foto de la entrega (opcional)</label><input type="file" id="rFile" accept="image/*"></div>
+  <div class="err" id="rErr"></div>
+  <button class="btn pri" style="width:100%" type="submit" id="rSave">Publicar reseña</button>
+ </form>
+</div></div>
 
 <div id="toast"></div>
 
@@ -393,6 +495,8 @@ const TS = () => firebase.firestore.FieldValue.serverTimestamp();
 let products=[], loaded=false, isAdmin=false, clientView=false;
 let cat='all', cond='all', shown=PAGE;
 const imgCache = new Map();
+let favs = new Set();
+try{favs = new Set(JSON.parse(localStorage.getItem('dsm_favs')||'[]'))}catch(e){}
 const adminMode = () => isAdmin && !clientView;
 
 function norm(id,d){
@@ -400,6 +504,7 @@ function norm(id,d){
   return {id,name:d.name||'Sin nombre',desc:d.description||'',chars:d.characteristics||'',price:+d.price||0,old:+d.oldPrice||0,
     category:d.category||'tecnologia',condition:d.condition||'nuevo',quality:+d.quality||0,
     stock,status:d.status||'disponible',thumb:d.thumb||d.image||'',legacy:d.image||'',
+    delivery:d.delivery!==false,dnote:d.deliveryNote||'',views:+d.views||0,wa:+d.waClicks||0,
     needsFix:!!d.image||!Number.isFinite(d.stock)||!d.status,created:tms(d.createdAt)};
 }
 const eff = p => (p.status==='vendido'||p.stock<=0) ? 'vendido' : p.status;
@@ -448,24 +553,130 @@ function cardHTML(p){
   const stock = sold?'':(p.stock<=3?`<span class="low">¡Últimas ${p.stock}!</span>`:`<span class="okk">${p.stock} disponibles</span>`);
   const q = p.condition==='usado'&&p.quality?`<span>${QUAL[p.quality]||''}</span>`:'';
   const msg=encodeURIComponent(`¡Hola! Me interesa "${p.name}" (${fmt(p.price)}).\n${base()}#p=${p.id}`);
-  const wa = sold?'<span class="cwa dis">No disponible</span>':`<a class="cwa" href="https://wa.me/${WA}?text=${msg}" target="_blank" rel="noopener">💬 ${st==='apartado'?'Preguntar':'Consultar'}</a>`;
+  const wa = `<div class="crow">${sold?'<span class="cwa dis">No disponible</span>':`<a class="cwa" data-act="wa" href="https://wa.me/${WA}?text=${msg}" target="_blank" rel="noopener">💬 ${st==='apartado'?'Preguntar':'Consultar'}</a>`}<button class="cshare" data-act="share" aria-label="Compartir"><svg class="ic"><use href="#i-share"/></svg></button></div>`;
   const adm = adminMode()?`<div class="adm">
     <div class="stepper"><button data-act="dec">−</button><b>${p.stock}</b><button data-act="inc">+</button><span>en inventario</span></div>
+    <div class="hint">👁 ${p.views} vistas · 💬 ${p.wa} consultas</div>
     <div class="seg">
      <button data-act="st" data-v="disponible" class="${st==='disponible'?'on':''}">Disponible</button>
      <button data-act="st" data-v="apartado" class="${st==='apartado'?'on':''}">Apartado</button>
      <button data-act="st" data-v="vendido" class="${st==='vendido'?'on':''}">Vendido</button></div>
     <div class="arow"><button class="btn" data-act="edit">✏️ Editar</button><button class="btn dng" data-act="del">🗑️</button></div></div>`:'';
   return `<article class="card ${sold?'off':''}" data-id="${esc(p.id)}">
-   <div class="im" data-act="open">${p.thumb?`<img src="${esc(p.thumb)}" alt="${esc(p.name)}" loading="lazy" decoding="async">`:'<div class="ph">📦</div>'}${rib}</div>
+   <div class="im" data-act="open">${p.thumb?`<img src="${esc(p.thumb)}" alt="${esc(p.name)}" loading="lazy" decoding="async">`:'<div class="ph">📦</div>'}${rib}<button class="fav ${favs.has(p.id)?'on':''}" data-act="fav" aria-label="Guardar en favoritos">♥</button></div>
    <div class="cb">
     <div class="pr"><b>${fmt(p.price)}</b>${disc?`<s>${fmt(p.old)}</s><span class="off">${disc}% OFF</span>`:''}</div>
     <h3 class="nm" data-act="open">${esc(p.name)}</h3>
-    <div class="tg">${q}${stock}</div>
+    <div class="tg">${q}${stock}${p.delivery&&!sold?'<span>🚚 Domicilio</span>':''}</div>
     ${wa}${adm}</div></article>`;
 }
+/* ============ FAVORITOS (lista para enviar por WhatsApp) ============ */
+function saveFavs(){try{localStorage.setItem('dsm_favs',JSON.stringify([...favs]))}catch(e){}}
+function updateFavN(){$('#favN').textContent=loaded?[...favs].filter(id=>products.some(p=>p.id===id)).length:favs.size}
+function toggleFav(id){
+  favs.has(id)?favs.delete(id):favs.add(id);saveFavs();updateFavN();
+  document.querySelectorAll('.card[data-id="'+id+'"] .fav').forEach(b=>b.classList.toggle('on',favs.has(id)));
+  if(favs.has(id))toast('Guardado en favoritos ♥','ok');
+}
+function openFav(){
+  const list=[...favs].map(id=>products.find(p=>p.id===id)).filter(Boolean);
+  if(!list.length){
+    $('#favList').innerHTML='<p class="hint" style="padding:10px 0;font-size:.9rem">Aún no tienes favoritos. Toca el ♥ en los productos que te gusten y envíanos la lista completa por WhatsApp.</p>';
+    $('#favFoot').innerHTML='';
+  }else{
+    $('#favList').innerHTML=list.map(p=>`<div class="favrow">${p.thumb?`<img src="${esc(p.thumb)}" alt="">`:'<div class="ph"></div>'}
+      <div class="fi"><b>${esc(p.name)}</b><span>${fmt(p.price)}${eff(p)==='vendido'?' · Vendido':eff(p)==='apartado'?' · Apartado':''}</span></div>
+      <button class="rm" data-id="${esc(p.id)}" aria-label="Quitar">✕</button></div>`).join('');
+    const av=list.filter(p=>eff(p)!=='vendido'),total=av.reduce((s,p)=>s+p.price,0);
+    const lines=av.map((p,i)=>`${i+1}. ${p.name} - ${fmt(p.price)}\n${base()}#p=${p.id}`).join('\n');
+    favMsgRaw=`¡Hola! Me interesan estos productos:\n\n${lines}\n\nTotal: ${fmt(total)}\n¿Siguen disponibles?`;
+    const msg=encodeURIComponent(favMsgRaw);
+    $('#favFoot').innerHTML=av.length?`<div class="favtot"><span>Total disponible</span><b>${fmt(total)}</b></div>
+      <a class="bigwa" href="https://wa.me/${WA}?text=${msg}" target="_blank" rel="noopener">Enviar lista por WhatsApp</a>
+      <button class="link" id="favClear">Vaciar favoritos</button>`:'<p class="hint" style="padding-top:10px">Estos productos ya no están disponibles.</p>';
+  }
+  const fa=$('#favFoot .bigwa');
+  if(fa){fa.insertAdjacentHTML('beforebegin',dlvHTML(true,''));
+    const upd=()=>{fa.href=`https://wa.me/${WA}?text=`+encodeURIComponent(favMsgRaw+'\n\n'+dlvLine(true))};
+    upd();bindDlv($('#favFoot'),upd)}
+  $('#mFav').classList.add('on');
+}
+$('#favBtn').onclick=openFav;
+$('#mFav').addEventListener('click',e=>{
+  const rm=e.target.closest('.rm');
+  if(rm){favs.delete(rm.dataset.id);saveFavs();updateFavN();
+    document.querySelectorAll('.card[data-id="'+rm.dataset.id+'"] .fav').forEach(b=>b.classList.remove('on'));openFav()}
+  if(e.target.id==='favClear'){favs.clear();saveFavs();updateFavN();document.querySelectorAll('.fav.on').forEach(b=>b.classList.remove('on'));openFav()}
+});
+
+/* ============ DOMICILIO ============ */
+let favMsgRaw='';
+let dv={mode:'domicilio',addr:''};
+try{Object.assign(dv,JSON.parse(localStorage.getItem('dsm_dv')||'{}'))}catch(e){}
+const saveDv=()=>{try{localStorage.setItem('dsm_dv',JSON.stringify(dv))}catch(e){}};
+const dlvLine=allow=>(allow&&dv.mode==='domicilio')?`Entrega: Domicilio${dv.addr.trim()?' → '+dv.addr.trim():''}`:'Entrega: Recoger / por coordinar';
+function dlvHTML(allow,note){
+  if(!allow)return `<div class="dlv"><b>🏪 Entrega</b><div class="hint">${esc(note||'Coordinamos la entrega contigo por WhatsApp.')}</div></div>`;
+  return `<div class="dlv"><b>¿Cómo lo quieres recibir?</b>
+   <div class="dmode"><button type="button" data-m="domicilio" class="${dv.mode==='domicilio'?'on':''}">🚚 Domicilio</button><button type="button" data-m="recoger" class="${dv.mode==='recoger'?'on':''}">🏪 Recoger</button></div>
+   <input class="daddr" placeholder="Barrio, dirección y ciudad (opcional)" value="${esc(dv.addr)}" style="${dv.mode==='domicilio'?'':'display:none'}">
+   ${note?`<div class="hint">🚚 ${esc(note)}</div>`:''}</div>`;
+}
+function bindDlv(root,onChange){
+  const box=root.querySelector('.dlv');if(!box)return;
+  const addr=box.querySelector('.daddr');if(!addr)return;
+  box.querySelectorAll('.dmode button').forEach(b=>b.onclick=()=>{
+    dv.mode=b.dataset.m;saveDv();
+    box.querySelectorAll('.dmode button').forEach(x=>x.classList.toggle('on',x===b));
+    addr.style.display=dv.mode==='domicilio'?'':'none';onChange()});
+  addr.oninput=()=>{dv.addr=addr.value;saveDv();onChange()};
+}
+
+/* ============ VISITAS, COMPARTIR ============ */
+function bump(id,field){
+  if(isAdmin)return;
+  try{const k='b_'+field+id;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){}
+  PROD.doc(id).update({[field]:firebase.firestore.FieldValue.increment(1)}).catch(()=>{});
+}
+async function shareProduct(p){
+  const url=`${base()}#p=${p.id}`;
+  try{if(navigator.share)await navigator.share({title:p.name,text:`${p.name} · ${fmt(p.price)}`,url});
+    else{await navigator.clipboard.writeText(url);toast('Enlace copiado','ok')}}catch(e){}
+}
+
+/* ============ RESEÑAS DE CLIENTES ============ */
+let reviews=[];
+db.collection('reviews').onSnapshot(s=>{
+  reviews=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>tms(b.createdAt)-tms(a.createdAt));renderReviews();
+},()=>{});
+function renderReviews(){
+  const sec=$('#revSec');
+  if(!reviews.length){sec.style.display='none';return}
+  sec.style.display='block';
+  $('#revRow').innerHTML=reviews.map(r=>{const n=Math.min(5,Math.max(1,r.stars||5));
+    return `<article class="rev">${r.photo?`<img src="${esc(r.photo)}" alt="" loading="lazy">`:''}
+    <div class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</div><p>${esc(r.text)}</p><b>${esc(r.name)}</b>
+    ${adminMode()?`<button class="rdel" data-id="${esc(r.id)}">Eliminar</button>`:''}</article>`}).join('');
+}
+$('#revRow').addEventListener('click',async e=>{
+  const b=e.target.closest('.rdel');if(!b||!adminMode())return;
+  if(!confirm('¿Eliminar esta reseña?'))return;
+  try{await db.collection('reviews').doc(b.dataset.id).delete();toast('Reseña eliminada','ok')}catch(er){toast('No se pudo eliminar','err')}
+});
+$('#btnRev').onclick=()=>{$('#mPanel').classList.remove('on');$('#fRev').reset();$('#rErr').style.display='none';$('#mRev').classList.add('on')};
+$('#fRev').onsubmit=async e=>{
+  e.preventDefault();const b=$('#rSave');b.disabled=true;b.textContent='Publicando...';
+  try{
+    const f=$('#rFile').files[0];
+    await db.collection('reviews').add({name:$('#rName').value.trim(),text:$('#rText').value.trim(),stars:+$('#rStars').value,
+      photo:f?await resize(f,600,.72):'',createdAt:TS()});
+    $('#mRev').classList.remove('on');toast('Reseña publicada','ok');
+  }catch(er){console.error(er);const m=$('#rErr');m.textContent='Error: '+(er.message||er);m.style.display='block'}
+  finally{b.disabled=false;b.textContent='Publicar reseña'}
+};
+
 function render(){
-  renderCats();
+  renderCats();updateFavN();renderReviews();
   const grid=$('#grid');
   if(!loaded){grid.innerHTML='<div class="skel"></div>'.repeat(8);return}
   const list=filtered();
@@ -477,8 +688,10 @@ function render(){
 }
 function renderStats(){
   let d=0,r=0,s=0,u=0,v=0;
+  const top=[...products].sort((a,b)=>b.views-a.views).filter(p=>p.views>0).slice(0,5);
+  $('#topv').innerHTML=top.length?'<h3 style="font-size:.95rem;margin:4px 0 8px">🔥 Más vistos</h3>'+top.map(p=>`<div class="hint" style="font-size:.85rem;padding:3px 0">${esc(p.name)} · 👁 ${p.views} · 💬 ${p.wa}</div>`).join('')+'<div style="height:12px"></div>':'';
   products.forEach(p=>{const e=eff(p);if(e==='vendido')s++;else{e==='apartado'?r++:d++;u+=p.stock;v+=p.stock*p.price}});
-  $('#stats').innerHTML=[[d,'Disponibles'],[r,'Apartados'],[s,'Vendidos'],[u,'Unidades en stock'],[fmt(v),'Valor del inventario']]
+  $('#stats').innerHTML=[[d,'Disponibles'],[r,'Apartados'],[s,'Vendidos'],[u,'Unidades en stock'],[fmt(v),'Valor del inventario'],[products.reduce((a,p)=>a+p.views,0),'Visitas a productos'],[products.reduce((a,p)=>a+p.wa,0),'Clics a WhatsApp']]
     .map(([a,b])=>`<div class="stat"><b>${a}</b><small>${b}</small></div>`).join('');
 }
 
@@ -506,6 +719,9 @@ $('#grid').addEventListener('click',async e=>{
   const card=el.closest('.card');if(!card)return;
   const p=products.find(x=>x.id===card.dataset.id);if(!p)return;
   const act=el.dataset.act;
+  if(act==='wa'){bump(p.id,'waClicks');return}
+  if(act==='share') return shareProduct(p);
+  if(act==='fav') return toggleFav(p.id);
   if(act==='open') return openDetail(p);
   if(!adminMode()) return;
   try{
@@ -548,14 +764,27 @@ async function openDetail(p){
     <h2>${esc(p.name)}</h2>
     <div class="pr"><b>${fmt(p.price)}</b>${disc?`<s>${fmt(p.old)}</s><span class="off">${disc}% OFF</span>`:''}</div>
     ${sold?'':`<div style="font-size:.9rem;color:${p.stock<=3?'var(--warn)':'var(--ok)'};font-weight:700">${p.stock<=3?`¡Quedan solo ${p.stock}!`:`${p.stock} unidades disponibles`}</div>`}
-    ${sold?'<span class="bigwa dis">Este artículo ya se vendió</span>':`<a class="bigwa" href="https://wa.me/${WA}?text=${msg}" target="_blank" rel="noopener">💬 ${st==='apartado'?'Preguntar por WhatsApp':'Comprar por WhatsApp'}</a>`}
-    <button class="sh" id="shBtn">🔗 Compartir este producto</button>
+    ${sold?'':dlvHTML(p.delivery,p.dnote)}
+    ${sold?'<span class="bigwa dis">Este artículo ya se vendió</span>':`<a class="bigwa" id="waMain" href="#" target="_blank" rel="noopener"><svg class="ic" style="font-size:22px"><use href="#i-wa"/></svg> ${st==='apartado'?'Preguntar por WhatsApp':'Comprar por WhatsApp'}</a>`}
+    <button class="sh" id="favDet"></button>
+    <div class="shrow"><span>Compartir:</span>
+     <a class="shi wa" id="shWa" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
+     <a class="shi fb" id="shFb" target="_blank" rel="noopener" aria-label="Compartir en Facebook"><svg class="ic"><use href="#i-fb"/></svg></a>
+     <button class="shi" id="shBtn" type="button" aria-label="Más opciones para compartir"><svg class="ic"><use href="#i-share"/></svg></button></div>
     <div class="seller"><div class="av">DSM</div><div><b>Compra Directa DSM</b><br><span style="color:var(--mut)">Compra directa, soluciones confiables</span></div></div>
    </div>
    ${specs?`<div class="sec"><h3>Características</h3>${specs}</div>`:''}
    ${p.desc?`<div class="sec"><h3>Descripción</h3><p class="desc">${esc(p.desc)}</p></div>`:''}`;
   $('#mDet').classList.add('on');$('#mDet').scrollTop=0;
   history.replaceState(null,'','#p='+p.id);
+  const fd=$('#favDet'),paintFav=()=>fd.textContent=favs.has(p.id)?'♥ En favoritos':'♡ Guardar';
+  paintFav();fd.onclick=()=>{toggleFav(p.id);paintFav()};
+  bump(p.id,'views');
+  $('#shWa').href='https://wa.me/?text='+encodeURIComponent(`${p.name} - ${fmt(p.price)}\n${url}`);
+  $('#shFb').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+  const waA=$('#waMain');
+  if(waA){const upd=()=>{waA.href=`https://wa.me/${WA}?text=`+encodeURIComponent(`¡Hola! Me interesa "${p.name}" (${fmt(p.price)}).\n${dlvLine(p.delivery)}\n${url}`)};
+    upd();bindDlv($('#detBody'),upd);waA.onclick=()=>bump(p.id,'waClicks')}
   $('#shBtn').onclick=async()=>{
     try{if(navigator.share)await navigator.share({title:p.name,text:`${p.name} · ${fmt(p.price)}`,url});
       else{await navigator.clipboard.writeText(url);toast('Enlace copiado','ok')}}catch(e){}};
@@ -600,6 +829,7 @@ async function openForm(p){
   $('#pName').value=p?p.name:'';$('#pDesc').value=p?p.desc:'';$('#pChars').value=p?p.chars:'';
   $('#pPrice').value=p?p.price:'';$('#pOld').value=p&&p.old?p.old:'';$('#pStock').value=p?p.stock:1;
   $('#pCat').value=p?p.category:'tecnologia';$('#pCond').value=p?p.condition:'nuevo';$('#pStatus').value=p?eff(p):'disponible';
+  $('#pDeliv').checked=p?p.delivery:true;$('#pDelivNote').value=p?p.dnote:'';
   $('#pQual').value=p&&p.quality?p.quality:5;$('#qWrap').style.display=$('#pCond').value==='usado'?'flex':'none';
   drawPrevs();$('#mForm').classList.add('on');
   if(p){fImgs=[...await getImages(p)];drawPrevs()}
@@ -613,7 +843,7 @@ $('#fProd').onsubmit=async e=>{
     const data={name:$('#pName').value.trim(),description:$('#pDesc').value.trim(),characteristics:$('#pChars').value.trim(),
       price:Math.max(0,parseInt($('#pPrice').value)||0),oldPrice:Math.max(0,parseInt($('#pOld').value)||0),
       category:$('#pCat').value,condition:$('#pCond').value,quality:$('#pCond').value==='usado'?+$('#pQual').value:0,
-      stock:status==='vendido'?0:stock,status,updatedAt:TS()};
+      stock:status==='vendido'?0:stock,status,delivery:$('#pDeliv').checked,deliveryNote:$('#pDelivNote').value.trim(),updatedAt:TS()};
     const ref=editing?PROD.doc(editing.id):PROD.doc();
     if(dirty||!editing){
       data.thumb=fImgs[0]?await resize(fImgs[0],480,.7):'';
