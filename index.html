@@ -302,6 +302,18 @@ body.canInstall .instbtn{display:inline-block}
 .rev{flex:0 0 250px !important;padding:12px !important;gap:6px !important}
 .rev p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:.86rem}
 .rev .rsub{font-size:.75rem;color:var(--mut);font-weight:600}
+.rvlist{display:flex;flex-direction:column;gap:8px}
+.rv{display:flex;gap:12px;background:#fff;border-radius:14px;box-shadow:var(--sh);padding:10px 12px;align-items:flex-start}
+.rv img{width:54px;height:54px;border-radius:10px;object-fit:cover;cursor:zoom-in;flex:none;background:#f3f5fa}
+.rv .rb{min-width:0;flex:1}
+.rv .rt{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.82rem}
+.rv .rt b{font-size:.88rem}.rv .rt .st{color:#f59e0b;letter-spacing:1px}
+.rv .rt .rd{color:var(--mut);font-size:.72rem;margin-left:auto}
+.rv .rx{font-size:.85rem;color:#394258;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rv .rm{font-size:.72rem;color:var(--brand);font-weight:700;margin-top:3px}
+.rv .rdel{margin-top:4px}
+.morerev{margin-top:10px;width:100%}
+#mAllRev .box{max-width:620px}#mAllRev .rvlist{max-height:65vh;overflow-y:auto;padding:2px}
 .linkbox{background:#f3f5fa;border-radius:12px;padding:12px;font-size:.8rem;word-break:break-all;margin:10px 0}
 .cstep{display:flex;flex-direction:column;gap:6px}
 .soldvia{font-weight:700;color:var(--bad);font-size:.78rem}
@@ -364,7 +376,8 @@ body.canInstall .instbtn{display:inline-block}
    <div class="revsum" id="revSum">Sé el primero en calificar nuestro servicio</div></div>
   <button class="btn pri" id="btnRate" type="button">✍️ Calificar el servicio</button>
  </div>
- <div class="revrow" id="revRow"></div>
+ <div class="rvlist" id="revRow"></div>
+ <button class="btn morerev" id="btnMoreRev" type="button" style="display:none"></button>
 </section>
 
 <main class="wrap">
@@ -556,6 +569,8 @@ body.canInstall .instbtn{display:inline-block}
   <button class="btn pri" style="width:100%" type="submit" id="cSave">Publicar mi calificación</button>
  </form>
 </div></div>
+
+<div class="modal" id="mAllRev"><div class="box"><button class="x" data-close>&times;</button><h2>⭐ Todas las reseñas</h2><div class="rvlist" id="allRevList" style="margin-top:12px"></div></div></div>
 
 <div class="modal" id="mImg"><div class="box"><button class="x" data-close>&times;</button><img id="imgBig" alt="Comentario del cliente"></div></div>
 
@@ -803,19 +818,26 @@ function renderReviews(){
     $('#revRow').innerHTML='<div class="revempty">Aún no hay opiniones. ¡Cuéntanos tu experiencia!</div>';return}
   const rs=reviews.filter(r=>r.stars>0),avg=rs.reduce((a,r)=>a+Math.min(5,Math.max(1,+r.stars)),0)/(rs.length||1);
   if(!rs.length)sum.textContent='Aún sin calificaciones';else sum.innerHTML=`<span class="starsbig">★★★★★<i style="width:${(avg/5*100).toFixed(1)}%">★★★★★</i></span> <b>${avg.toFixed(1)}</b> de 5 · ${rs.length} ${rs.length===1?'calificación':'calificaciones'}`;
-  $('#revRow').innerHTML=reviews.map(r=>{const n=Math.min(5,Math.max(1,+r.stars||5));
-    const d=tms(r.createdAt)?new Date(tms(r.createdAt)).toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'}):'';
-    return `<article class="rev">${r.photo?`<img class="cap" data-zoom="1" src="${esc(r.photo)}" alt="Comentario del cliente" loading="lazy">`:''}
-    ${r.via?`<span class="via">Compró por ${esc(r.via)}${r.product?' · '+esc(r.product):''}</span>`:''}
-    ${r.stars>0?`<div class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</div>`:''}${r.starsP?`<span class="rsub">Producto ${r.starsP}★ · Atención ${r.starsS}★</span>`:''}${r.text?`<p>${esc(r.text)}</p>`:''}<b>${esc(r.name||'Cliente')}</b><span class="rdate">${d}</span>
-    ${adminMode()?`<button class="rdel" data-id="${esc(r.id)}">Eliminar</button>`:''}</article>`}).join('');
+  const row=r=>{const n=Math.min(5,Math.max(1,+r.stars||5));
+    const d=tms(r.createdAt)?new Date(tms(r.createdAt)).toLocaleDateString('es-CO',{day:'numeric',month:'short'}):'';
+    return `<article class="rv">${r.photo?`<img data-zoom="1" src="${esc(r.photo)}" alt="Foto del cliente" loading="lazy">`:''}
+    <div class="rb"><div class="rt"><b>${esc(r.name||'Cliente')}</b>${r.stars>0?`<span class="st">${'★'.repeat(n)}${'☆'.repeat(5-n)}</span>`:''}<span class="rd">${d}</span></div>
+    ${r.text?`<div class="rx">${esc(r.text)}</div>`:''}
+    ${r.via||r.product?`<div class="rm">${r.via?'Compró por '+esc(r.via):''}${r.product?(r.via?' · ':'')+esc(r.product):''}${r.starsP?` · Producto ${r.starsP}★ · Atención ${r.starsS}★`:''}</div>`:''}
+    ${adminMode()?`<button class="rdel" data-id="${esc(r.id)}">Eliminar</button>`:''}</div></article>`};
+  $('#revRow').innerHTML=reviews.slice(0,3).map(row).join('');
+  const mb=$('#btnMoreRev');mb.style.display=reviews.length>3?'block':'none';mb.textContent=`Ver más reseñas (${reviews.length-3} más)`;
+  $('#allRevList').innerHTML=reviews.map(row).join('');
 }
-$('#revRow').addEventListener('click',async e=>{
+$('#btnMoreRev').onclick=()=>$('#mAllRev').classList.add('on');
+$('#allRevList').addEventListener('click',e=>revClick(e));
+$('#revRow').addEventListener('click',e=>revClick(e));
+async function revClick(e){
   if(e.target.dataset.zoom){$('#imgBig').src=e.target.src;$('#mImg').classList.add('on');return}
   const b=e.target.closest('.rdel');if(!b||!adminMode())return;
   if(!confirm('¿Eliminar esta reseña?'))return;
   try{await db.collection('reviews').doc(b.dataset.id).delete();toast('Reseña eliminada','ok')}catch(er){toast('No se pudo eliminar','err')}
-});
+}
 const setStars=v=>{$('#rStars').value=v;document.querySelectorAll('#starPick button').forEach(b=>b.classList.toggle('on',+b.dataset.v<=v))};
 $('#starPick').onclick=e=>{const b=e.target.closest('button');if(b)setStars(+b.dataset.v)};
 const openRev=()=>{$('#fRev').reset();setStars(0);try{$('#rName').value=localStorage.getItem('dsm_rn')||''}catch(e){}
