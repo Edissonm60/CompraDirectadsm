@@ -230,6 +230,23 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
 .rev p{font-size:.9rem;color:#394258}
 .rdel{align-self:flex-start;border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 10px;font-size:.75rem;color:var(--bad)}
 
+/* ===== Domicilio v2, likes, botón de tarjeta ===== */
+button.cwa{border:0;font:inherit;font-weight:800;font-size:.86rem;cursor:pointer;background:var(--brand);color:#fff}
+button.cwa:hover{background:var(--brand2)}
+.fav{width:auto;min-width:34px;padding:0 9px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:4px}
+.fav small{font-size:.74rem;font-weight:800;color:var(--mut)}
+.fav.on small{color:#e11d48}
+.dtag{font-weight:700}.dtag.incluido{color:var(--ok)}.dtag.costo{color:var(--brand)}.dtag.no{color:var(--mut)}
+.dc{font-size:.88rem;font-weight:700}.dc.ok{color:var(--ok)}
+.dpane{display:flex;flex-direction:column;gap:8px}
+.dpane input{padding:10px 12px;border:1px solid var(--line);border-radius:10px;outline:0;width:100%;background:#fff}
+.dpane input:focus{border-color:var(--brand)}
+.dstore{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.9rem}
+.dstore a{color:var(--brand);font-weight:700}
+.dmode .one{grid-column:1/-1;padding:9px;border-radius:10px;background:var(--brand);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+.bigwa.need{opacity:.55;pointer-events:none}
+.trust a{background:rgba(255,255,255,.16);padding:7px 13px;border-radius:999px;font-size:.8rem;font-weight:600;color:#fff;text-decoration:none}
+
 /* ===== Responsive ===== */
 @media(max-width:899px){
  .layout{grid-template-columns:1fr}
@@ -255,7 +272,19 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
  .rtop .sel{flex:1}
  .filters{top:auto}
 }
+@media(max-width:720px){.trust{gap:6px}.trust span,.trust a{font-size:.72rem;padding:6px 10px}}
 @media(max-width:360px){.grid{grid-template-columns:1fr}}
+
+/* ===== Reseñas públicas ===== */
+#revSec{margin-top:18px}
+.revhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.revsum{font-size:.9rem;color:var(--mut);font-weight:600;margin-top:4px}
+.revsum b{color:#f59e0b;font-size:1.05rem}
+.rev .rdate{font-size:.75rem;color:var(--mut)}
+.starpick{display:flex;gap:4px;font-size:2.2rem;line-height:1}
+.starpick button{border:0;background:none;color:#d5dae6;cursor:pointer;padding:0 2px}
+.starpick button.on{color:#f59e0b}
+.revempty{flex:1;background:#fff;border-radius:var(--r);padding:18px;color:var(--mut);box-shadow:var(--sh)}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -302,8 +331,17 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
  <div class="wrap">
   <h1>Artículos <em>nuevos y usados</em> al mejor precio</h1>
   <p>Mira las fotos, características y precios. Cuando algo te guste, escríbenos por WhatsApp y lo separamos.</p>
-  <div class="trust"><span>✅ Nuevos y usados</span><span>💬 Atención directa por WhatsApp</span><span>🤝 Compra directa, sin intermediarios</span></div>
+  <div class="trust"><span>✅ Nuevos y usados</span><span>💬 Atención directa por WhatsApp</span><span>🚚 Domicilios en Bogotá</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cra.+12+Bis+%2334C-17%2C+Bogot%C3%A1%2C+Colombia" target="_blank" rel="noopener">📍 Cra. 12 Bis #34C-17, Bogotá</a></div>
  </div>
+</section>
+
+<section class="wrap" id="revSec">
+ <div class="revhead">
+  <div><h2 class="rh" style="margin:0">⭐ Opiniones de nuestros clientes</h2>
+   <div class="revsum" id="revSum">Sé el primero en calificar nuestro servicio</div></div>
+  <button class="btn pri" id="btnRate" type="button">✍️ Calificar el servicio</button>
+ </div>
+ <div class="revrow" id="revRow"></div>
 </section>
 
 <main class="wrap">
@@ -341,13 +379,10 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
  </div>
 </main>
 
-<section class="wrap" id="revSec" style="display:none">
- <h2 class="rh">⭐ Lo que dicen nuestros clientes</h2>
- <div class="revrow" id="revRow"></div>
-</section>
 
 <footer>
  <div class="wrap">
+  <div style="margin-bottom:14px;line-height:1.7">📍 <b>Cra. 12 Bis #34C-17, Bogotá</b> · <a href="https://www.google.com/maps/search/?api=1&amp;query=Cra.+12+Bis+%2334C-17%2C+Bogot%C3%A1%2C+Colombia" target="_blank" rel="noopener" style="color:var(--brand);font-weight:700">Ver en Google Maps</a><br>🚚 Domicilios solo en Bogotá · 🏪 Recoge en el negocio</div>
   <div style="font-weight:800;color:var(--txt);margin-bottom:10px">Síguenos en redes</div>
   <div class="soc" style="justify-content:center;margin-bottom:14px">
    <a class="wa" href="https://wa.me/573059007473" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
@@ -413,8 +448,11 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
    </div>
    <div class="f" id="qWrap" style="display:none"><label>Estado físico (usados)</label>
     <select id="pQual"><option value="5">Excelente</option><option value="4">Muy bueno</option><option value="3">Bueno</option><option value="2">Regular</option></select></div>
-   <div class="f"><label class="opt" style="font-size:.9rem;color:var(--txt);font-weight:700"><input type="checkbox" id="pDeliv" checked> 🚚 Este producto tiene domicilio</label>
-    <input id="pDelivNote" maxlength="120" placeholder="Ej: Domicilio en Bogotá, costo $8.000 (opcional)"></div>
+   <div class="fr3">
+    <div class="f"><label>🚚 Domicilio (solo Bogotá)</label><select id="pDType"><option value="costo">Domicilio con costo</option><option value="incluido">Domicilio incluido (gratis)</option><option value="no">Solo recoger en el negocio</option></select></div>
+    <div class="f" id="dcWrap"><label>Valor del domicilio (COP)</label><input id="pDCost" type="number" min="0" step="500" inputmode="numeric" placeholder="Ej: 8000"></div>
+    <div class="f"><label>Nota (opcional)</label><input id="pDelivNote" maxlength="80" placeholder="Ej: entrega el mismo día"></div>
+   </div>
    <div class="f"><label>Características (una por línea, formato Clave: valor)</label>
     <textarea id="pChars" placeholder="Marca: Hikvision&#10;Resolución: 2MP&#10;Garantía: 3 meses&#10;Incluye: cargador y caja"></textarea></div>
    <div class="f"><label>Descripción</label><textarea id="pDesc" maxlength="2000" placeholder="Cuenta el estado, detalles, motivo de venta..."></textarea></div>
@@ -438,18 +476,20 @@ footer .fl a{color:var(--brand);font-weight:700;text-decoration:none}
  <div id="favList"></div><div id="favFoot"></div>
 </div></div>
 
-<!-- Nueva reseña (admin) -->
+<!-- Calificar servicio (público) -->
 <div class="modal" id="mRev"><div class="box">
  <button class="x" data-close>&times;</button>
- <h2>⭐ Nueva reseña de cliente</h2>
- <p class="hint" style="margin-bottom:12px">Publica solo opiniones reales de tus clientes.</p>
+ <h2>⭐ Califica nuestro servicio</h2>
+ <p class="hint" style="margin-bottom:12px">Tu opinión será visible para todos. Gracias por ayudar a otros compradores.</p>
  <form id="fRev">
-  <div class="f"><label>Nombre del cliente</label><input id="rName" required maxlength="60" placeholder="Ej: Carlos P., Bogotá"></div>
-  <div class="f"><label>Opinión</label><textarea id="rText" required maxlength="400"></textarea></div>
-  <div class="f"><label>Calificación</label><select id="rStars"><option value="5">★★★★★ (5)</option><option value="4">★★★★ (4)</option><option value="3">★★★ (3)</option></select></div>
-  <div class="f"><label>Foto de la entrega (opcional)</label><input type="file" id="rFile" accept="image/*"></div>
+  <div class="f"><label>Tu calificación</label>
+   <div class="starpick" id="starPick" role="radiogroup" aria-label="Calificación">
+    <button type="button" data-v="1" aria-label="1 estrella">★</button><button type="button" data-v="2" aria-label="2 estrellas">★</button><button type="button" data-v="3" aria-label="3 estrellas">★</button><button type="button" data-v="4" aria-label="4 estrellas">★</button><button type="button" data-v="5" aria-label="5 estrellas">★</button>
+   </div><input type="hidden" id="rStars" value="0"></div>
+  <div class="f"><label>Tu nombre</label><input id="rName" required maxlength="40" placeholder="Ej: Carlos P."></div>
+  <div class="f"><label>Tu comentario</label><textarea id="rText" required minlength="5" maxlength="400" rows="4" placeholder="¿Cómo fue la atención, el producto, la entrega?"></textarea></div>
   <div class="err" id="rErr"></div>
-  <button class="btn pri" style="width:100%" type="submit" id="rSave">Publicar reseña</button>
+  <button class="btn pri" style="width:100%" type="submit" id="rSave">Publicar mi opinión</button>
  </form>
 </div></div>
 
@@ -504,7 +544,8 @@ function norm(id,d){
   return {id,name:d.name||'Sin nombre',desc:d.description||'',chars:d.characteristics||'',price:+d.price||0,old:+d.oldPrice||0,
     category:d.category||'tecnologia',condition:d.condition||'nuevo',quality:+d.quality||0,
     stock,status:d.status||'disponible',thumb:d.thumb||d.image||'',legacy:d.image||'',
-    delivery:d.delivery!==false,dnote:d.deliveryNote||'',views:+d.views||0,wa:+d.waClicks||0,
+    dtype:d.deliveryType||(d.delivery===false?'no':'costo'),dcost:+d.deliveryCost||0,dnote:d.deliveryNote||'',
+    views:+d.views||0,wa:+d.waClicks||0,likes:Math.max(0,+d.likes||0),
     needsFix:!!d.image||!Number.isFinite(d.stock)||!d.status,created:tms(d.createdAt)};
 }
 const eff = p => (p.status==='vendido'||p.stock<=0) ? 'vendido' : p.status;
@@ -552,29 +593,29 @@ function cardHTML(p){
   const disc = p.old>p.price ? Math.round((1-p.price/p.old)*100) : 0;
   const stock = sold?'':(p.stock<=3?`<span class="low">¡Últimas ${p.stock}!</span>`:`<span class="okk">${p.stock} disponibles</span>`);
   const q = p.condition==='usado'&&p.quality?`<span>${QUAL[p.quality]||''}</span>`:'';
-  const msg=encodeURIComponent(`¡Hola! Me interesa "${p.name}" (${fmt(p.price)}).\n${base()}#p=${p.id}`);
-  const wa = `<div class="crow">${sold?'<span class="cwa dis">No disponible</span>':`<a class="cwa" data-act="wa" href="https://wa.me/${WA}?text=${msg}" target="_blank" rel="noopener">💬 ${st==='apartado'?'Preguntar':'Consultar'}</a>`}<button class="cshare" data-act="share" aria-label="Compartir"><svg class="ic"><use href="#i-share"/></svg></button></div>`;
+  const wa = `<div class="crow">${sold?'<span class="cwa dis">Vendido</span>':`<button class="cwa" data-act="open">${st==='apartado'?'Ver producto · Apartado':'Ver producto'}</button>`}<button class="cshare" data-act="share" aria-label="Compartir"><svg class="ic"><use href="#i-share"/></svg></button></div>`;
   const adm = adminMode()?`<div class="adm">
     <div class="stepper"><button data-act="dec">−</button><b>${p.stock}</b><button data-act="inc">+</button><span>en inventario</span></div>
-    <div class="hint">👁 ${p.views} vistas · 💬 ${p.wa} consultas</div>
+    <div class="hint">👁 ${p.views} vistas · ♥ ${p.likes} me gusta · 💬 ${p.wa} consultas</div>
     <div class="seg">
      <button data-act="st" data-v="disponible" class="${st==='disponible'?'on':''}">Disponible</button>
      <button data-act="st" data-v="apartado" class="${st==='apartado'?'on':''}">Apartado</button>
      <button data-act="st" data-v="vendido" class="${st==='vendido'?'on':''}">Vendido</button></div>
     <div class="arow"><button class="btn" data-act="edit">✏️ Editar</button><button class="btn dng" data-act="del">🗑️</button></div></div>`:'';
   return `<article class="card ${sold?'off':''}" data-id="${esc(p.id)}">
-   <div class="im" data-act="open">${p.thumb?`<img src="${esc(p.thumb)}" alt="${esc(p.name)}" loading="lazy" decoding="async">`:'<div class="ph">📦</div>'}${rib}<button class="fav ${favs.has(p.id)?'on':''}" data-act="fav" aria-label="Guardar en favoritos">♥</button></div>
+   <div class="im" data-act="open">${p.thumb?`<img src="${esc(p.thumb)}" alt="${esc(p.name)}" loading="lazy" decoding="async">`:'<div class="ph">📦</div>'}${rib}<button class="fav ${favs.has(p.id)?'on':''}" data-act="fav" aria-label="Guardar en favoritos">♥${p.likes>0?`<small>${p.likes}</small>`:''}</button></div>
    <div class="cb">
     <div class="pr"><b>${fmt(p.price)}</b>${disc?`<s>${fmt(p.old)}</s><span class="off">${disc}% OFF</span>`:''}</div>
     <h3 class="nm" data-act="open">${esc(p.name)}</h3>
-    <div class="tg">${q}${stock}${p.delivery&&!sold?'<span>🚚 Domicilio</span>':''}</div>
+    <div class="tg">${q}${stock}${sold?'':`<span class="dtag ${p.dtype}">${p.dtype==='no'?'🏪':'🚚'} ${dTagText(p)}</span>`}</div>
     ${wa}${adm}</div></article>`;
 }
 /* ============ FAVORITOS (lista para enviar por WhatsApp) ============ */
 function saveFavs(){try{localStorage.setItem('dsm_favs',JSON.stringify([...favs]))}catch(e){}}
 function updateFavN(){$('#favN').textContent=loaded?[...favs].filter(id=>products.some(p=>p.id===id)).length:favs.size}
 function toggleFav(id){
-  favs.has(id)?favs.delete(id):favs.add(id);saveFavs();updateFavN();
+  const adding=!favs.has(id);
+  adding?favs.add(id):favs.delete(id);saveFavs();updateFavN();likeBump(id,adding?1:-1);
   document.querySelectorAll('.card[data-id="'+id+'"] .fav').forEach(b=>b.classList.toggle('on',favs.has(id)));
   if(favs.has(id))toast('Guardado en favoritos ♥','ok');
 }
@@ -587,8 +628,8 @@ function openFav(){
     $('#favList').innerHTML=list.map(p=>`<div class="favrow">${p.thumb?`<img src="${esc(p.thumb)}" alt="">`:'<div class="ph"></div>'}
       <div class="fi"><b>${esc(p.name)}</b><span>${fmt(p.price)}${eff(p)==='vendido'?' · Vendido':eff(p)==='apartado'?' · Apartado':''}</span></div>
       <button class="rm" data-id="${esc(p.id)}" aria-label="Quitar">✕</button></div>`).join('');
-    const av=list.filter(p=>eff(p)!=='vendido'),total=av.reduce((s,p)=>s+p.price,0);
-    const lines=av.map((p,i)=>`${i+1}. ${p.name} - ${fmt(p.price)}\n${base()}#p=${p.id}`).join('\n');
+    const av=list.filter(p=>eff(p)!=='vendido'),total=av.reduce((s,p)=>s+p.price,0);favAv=av;
+    const lines=av.map((p,i)=>`${i+1}. ${p.name} - ${fmt(p.price)} (${dTagText(p)})`).join('\n');
     favMsgRaw=`¡Hola! Me interesan estos productos:\n\n${lines}\n\nTotal: ${fmt(total)}\n¿Siguen disponibles?`;
     const msg=encodeURIComponent(favMsgRaw);
     $('#favFoot').innerHTML=av.length?`<div class="favtot"><span>Total disponible</span><b>${fmt(total)}</b></div>
@@ -596,40 +637,80 @@ function openFav(){
       <button class="link" id="favClear">Vaciar favoritos</button>`:'<p class="hint" style="padding-top:10px">Estos productos ya no están disponibles.</p>';
   }
   const fa=$('#favFoot .bigwa');
-  if(fa){fa.insertAdjacentHTML('beforebegin',dlvHTML(true,''));
-    const upd=()=>{fa.href=`https://wa.me/${WA}?text=`+encodeURIComponent(favMsgRaw+'\n\n'+dlvLine(true))};
+  if(fa){fa.insertAdjacentHTML('beforebegin',dlvHTML(null,true));
+    const upd=()=>{const ok=dlvReadyMany();fa.classList.toggle('need',!ok);
+      fa.textContent=ok?'Enviar lista por WhatsApp':'Elige cómo lo recibes ↑';
+      fa.href=ok?`https://wa.me/${WA}?text=`+encodeURIComponent(favMsgRaw+'\n\n'+dlvTextMany(favAv)):'#'};
     upd();bindDlv($('#favFoot'),upd)}
   $('#mFav').classList.add('on');
 }
 $('#favBtn').onclick=openFav;
 $('#mFav').addEventListener('click',e=>{
   const rm=e.target.closest('.rm');
-  if(rm){favs.delete(rm.dataset.id);saveFavs();updateFavN();
+  if(rm){favs.delete(rm.dataset.id);saveFavs();updateFavN();likeBump(rm.dataset.id,-1);
     document.querySelectorAll('.card[data-id="'+rm.dataset.id+'"] .fav').forEach(b=>b.classList.remove('on'));openFav()}
-  if(e.target.id==='favClear'){favs.clear();saveFavs();updateFavN();document.querySelectorAll('.fav.on').forEach(b=>b.classList.remove('on'));openFav()}
+  if(e.target.id==='favClear'){[...favs].forEach(id=>likeBump(id,-1));favs.clear();saveFavs();updateFavN();document.querySelectorAll('.fav.on').forEach(b=>b.classList.remove('on'));openFav()}
 });
 
-/* ============ DOMICILIO ============ */
-let favMsgRaw='';
-let dv={mode:'domicilio',addr:''};
+/* ============ DOMICILIO / RECOGIDA ============ */
+const STORE={addr:'Cra. 12 Bis #34C-17',city:'Bogotá',maps:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Cra. 12 Bis #34C-17, Bogotá, Colombia')};
+let favMsgRaw='';let favAv=[];
+let dv={mode:'',barrio:'',addr:''};
 try{Object.assign(dv,JSON.parse(localStorage.getItem('dsm_dv')||'{}'))}catch(e){}
+if(dv.mode!=='domicilio'&&dv.mode!=='recoger')dv.mode='';
+dv.barrio=dv.barrio||'';dv.addr=dv.addr||'';
 const saveDv=()=>{try{localStorage.setItem('dsm_dv',JSON.stringify(dv))}catch(e){}};
-const dlvLine=allow=>(allow&&dv.mode==='domicilio')?`Entrega: Domicilio${dv.addr.trim()?' → '+dv.addr.trim():''}`:'Entrega: Recoger / por coordinar';
-function dlvHTML(allow,note){
-  if(!allow)return `<div class="dlv"><b>🏪 Entrega</b><div class="hint">${esc(note||'Coordinamos la entrega contigo por WhatsApp.')}</div></div>`;
-  return `<div class="dlv"><b>¿Cómo lo quieres recibir?</b>
-   <div class="dmode"><button type="button" data-m="domicilio" class="${dv.mode==='domicilio'?'on':''}">🚚 Domicilio</button><button type="button" data-m="recoger" class="${dv.mode==='recoger'?'on':''}">🏪 Recoger</button></div>
-   <input class="daddr" placeholder="Barrio, dirección y ciudad (opcional)" value="${esc(dv.addr)}" style="${dv.mode==='domicilio'?'':'display:none'}">
-   ${note?`<div class="hint">🚚 ${esc(note)}</div>`:''}</div>`;
+const dTagText=p=>p.dtype==='incluido'?'Domicilio incluido':p.dtype==='costo'?(p.dcost>0?'Domicilio '+fmt(p.dcost):'Domicilio (valor a confirmar)'):'Solo recoger';
+const dCostText=p=>p.dtype==='incluido'?'domicilio incluido':p.dcost>0?'valor del domicilio '+fmt(p.dcost):'valor del domicilio por confirmar';
+const modeFor=p=>(p&&p.dtype==='no')?'recoger':dv.mode;
+const addrOk=()=>dv.barrio.trim().length>1&&dv.addr.trim().length>3;
+const dlvReady=p=>{const m=modeFor(p);return m==='recoger'||(m==='domicilio'&&addrOk())};
+const dlvReadyMany=()=>dv.mode==='recoger'||(dv.mode==='domicilio'&&addrOk());
+function dlvText(p){
+  if(modeFor(p)==='recoger')return `Entrega: Recoger en el negocio (${STORE.addr}, ${STORE.city})`;
+  return `Entrega: Domicilio en Bogotá (${dCostText(p)})\nBarrio: ${dv.barrio.trim()}\nDirección: ${dv.addr.trim()}`;
+}
+function dlvTextMany(av){
+  if(dv.mode==='recoger')return `Entrega: Recoger en el negocio (${STORE.addr}, ${STORE.city})`;
+  const po=av.filter(p=>p.dtype==='no').map(p=>p.name);
+  return `Entrega: Domicilio en Bogotá\nBarrio: ${dv.barrio.trim()}\nDirección: ${dv.addr.trim()}`+(po.length?`\n(Solo recoger en el negocio: ${po.join(', ')})`:'');
+}
+function dlvHTML(p,many){
+  const only=!many&&p.dtype==='no';
+  const m=only?'recoger':dv.mode;
+  const costLine=many?'<div class="dc">El valor del domicilio depende de cada producto (se indica en cada uno).</div>'
+    :p.dtype==='incluido'?'<div class="dc ok">✅ Domicilio incluido en Bogotá</div>'
+    :p.dtype==='costo'?`<div class="dc">🚚 ${p.dcost>0?'Valor del domicilio en Bogotá: <b>'+fmt(p.dcost)+'</b>':'Domicilio en Bogotá: valor por confirmar'}</div>`
+    :'<div class="dc">🏪 Este producto se entrega recogiéndolo en el negocio.</div>';
+  const note=(!many&&p.dnote)?`<div class="hint">${esc(p.dnote)}</div>`:'';
+  const btns=only?'<span class="one">🏪 Recoger en el negocio</span>'
+    :`<button type="button" data-m="domicilio" class="${m==='domicilio'?'on':''}">🚚 Domicilio</button><button type="button" data-m="recoger" class="${m==='recoger'?'on':''}">🏪 Recoger en el negocio</button>`;
+  return `<div class="dlv"><b>¿Cómo lo quieres recibir?</b>${costLine}
+   <div class="dmode">${btns}</div>
+   <div class="dpane" data-pane="domicilio" style="${m==='domicilio'?'':'display:none'}">
+    <div class="hint">📍 Solo entregamos en Bogotá</div>
+    <input class="dbarrio" placeholder="Barrio" value="${esc(dv.barrio)}" maxlength="60">
+    <input class="daddr" placeholder="Dirección completa (calle o carrera, número, casa o apto)" value="${esc(dv.addr)}" maxlength="120">
+   </div>
+   <div class="dpane" data-pane="recoger" style="${m==='recoger'?'':'display:none'}">
+    <div class="dstore">📍 <b>${STORE.addr}</b>, ${STORE.city}<br><a href="${STORE.maps}" target="_blank" rel="noopener">Ver ubicación en Google Maps</a></div>
+   </div>${note}</div>`;
 }
 function bindDlv(root,onChange){
   const box=root.querySelector('.dlv');if(!box)return;
-  const addr=box.querySelector('.daddr');if(!addr)return;
+  const show=m=>box.querySelectorAll('.dpane').forEach(x=>x.style.display=x.dataset.pane===m?'':'none');
   box.querySelectorAll('.dmode button').forEach(b=>b.onclick=()=>{
     dv.mode=b.dataset.m;saveDv();
     box.querySelectorAll('.dmode button').forEach(x=>x.classList.toggle('on',x===b));
-    addr.style.display=dv.mode==='domicilio'?'':'none';onChange()});
-  addr.oninput=()=>{dv.addr=addr.value;saveDv();onChange()};
+    show(dv.mode);onChange()});
+  const br=box.querySelector('.dbarrio'),ad=box.querySelector('.daddr');
+  br.oninput=()=>{dv.barrio=br.value;saveDv();onChange()};
+  ad.oninput=()=>{dv.addr=ad.value;saveDv();onChange()};
+}
+$('#pDType').onchange=()=>{$('#dcWrap').style.display=$('#pDType').value==='costo'?'flex':'none'};
+function likeBump(id,delta){
+  if(isAdmin)return;
+  PROD.doc(id).update({likes:firebase.firestore.FieldValue.increment(delta)}).catch(()=>{});
 }
 
 /* ============ VISITAS, COMPARTIR ============ */
@@ -650,12 +731,16 @@ db.collection('reviews').onSnapshot(s=>{
   reviews=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>tms(b.createdAt)-tms(a.createdAt));renderReviews();
 },()=>{});
 function renderReviews(){
-  const sec=$('#revSec');
-  if(!reviews.length){sec.style.display='none';return}
-  sec.style.display='block';
-  $('#revRow').innerHTML=reviews.map(r=>{const n=Math.min(5,Math.max(1,r.stars||5));
+  const sum=$('#revSum');
+  if(!reviews.length){
+    sum.textContent='Sé el primero en calificar nuestro servicio';
+    $('#revRow').innerHTML='<div class="revempty">Aún no hay opiniones. ¡Cuéntanos tu experiencia!</div>';return}
+  const rs=reviews.filter(r=>r.stars>0),avg=rs.reduce((a,r)=>a+Math.min(5,Math.max(1,+r.stars||5)),0)/(rs.length||1);
+  sum.innerHTML=`<b>★ ${avg.toFixed(1)}</b> de 5 · ${reviews.length} ${reviews.length===1?'opinión':'opiniones'}`;
+  $('#revRow').innerHTML=reviews.map(r=>{const n=Math.min(5,Math.max(1,+r.stars||5));
+    const d=tms(r.createdAt)?new Date(tms(r.createdAt)).toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'}):'';
     return `<article class="rev">${r.photo?`<img src="${esc(r.photo)}" alt="" loading="lazy">`:''}
-    <div class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</div><p>${esc(r.text)}</p><b>${esc(r.name)}</b>
+    <div class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</div><p>${esc(r.text)}</p><b>${esc(r.name)}</b><span class="rdate">${d}</span>
     ${adminMode()?`<button class="rdel" data-id="${esc(r.id)}">Eliminar</button>`:''}</article>`}).join('');
 }
 $('#revRow').addEventListener('click',async e=>{
@@ -663,16 +748,24 @@ $('#revRow').addEventListener('click',async e=>{
   if(!confirm('¿Eliminar esta reseña?'))return;
   try{await db.collection('reviews').doc(b.dataset.id).delete();toast('Reseña eliminada','ok')}catch(er){toast('No se pudo eliminar','err')}
 });
-$('#btnRev').onclick=()=>{$('#mPanel').classList.remove('on');$('#fRev').reset();$('#rErr').style.display='none';$('#mRev').classList.add('on')};
+const setStars=v=>{$('#rStars').value=v;document.querySelectorAll('#starPick button').forEach(b=>b.classList.toggle('on',+b.dataset.v<=v))};
+$('#starPick').onclick=e=>{const b=e.target.closest('button');if(b)setStars(+b.dataset.v)};
+const openRev=()=>{$('#fRev').reset();setStars(0);try{$('#rName').value=localStorage.getItem('dsm_rn')||''}catch(e){}
+  $('#rErr').style.display='none';$('#mRev').classList.add('on')};
+$('#btnRate').onclick=openRev;
+if($('#btnRev'))$('#btnRev').onclick=()=>{$('#mPanel').classList.remove('on');openRev()};
 $('#fRev').onsubmit=async e=>{
-  e.preventDefault();const b=$('#rSave');b.disabled=true;b.textContent='Publicando...';
+  e.preventDefault();const m=$('#rErr'),st=+$('#rStars').value;
+  if(!st){m.textContent='Elige de 1 a 5 estrellas.';m.style.display='block';return}
+  let last=0;try{last=+localStorage.getItem('dsm_rt')||0}catch(x){}
+  if(!adminMode()&&Date.now()-last<60000){m.textContent='Espera un momento antes de enviar otra opinión.';m.style.display='block';return}
+  const b=$('#rSave');b.disabled=true;b.textContent='Publicando...';
   try{
-    const f=$('#rFile').files[0];
-    await db.collection('reviews').add({name:$('#rName').value.trim(),text:$('#rText').value.trim(),stars:+$('#rStars').value,
-      photo:f?await resize(f,600,.72):'',createdAt:TS()});
-    $('#mRev').classList.remove('on');toast('Reseña publicada','ok');
-  }catch(er){console.error(er);const m=$('#rErr');m.textContent='Error: '+(er.message||er);m.style.display='block'}
-  finally{b.disabled=false;b.textContent='Publicar reseña'}
+    await db.collection('reviews').add({name:$('#rName').value.trim().slice(0,40),text:$('#rText').value.trim().slice(0,400),stars:st,photo:'',createdAt:TS()});
+    try{localStorage.setItem('dsm_rn',$('#rName').value.trim());localStorage.setItem('dsm_rt',String(Date.now()))}catch(x){}
+    $('#mRev').classList.remove('on');toast('¡Gracias por tu opinión!','ok');
+  }catch(er){console.error(er);m.textContent='No se pudo publicar. Revisa tu conexión e inténtalo de nuevo.';m.style.display='block'}
+  finally{b.disabled=false;b.textContent='Publicar mi opinión'}
 };
 
 function render(){
@@ -691,7 +784,7 @@ function renderStats(){
   const top=[...products].sort((a,b)=>b.views-a.views).filter(p=>p.views>0).slice(0,5);
   $('#topv').innerHTML=top.length?'<h3 style="font-size:.95rem;margin:4px 0 8px">🔥 Más vistos</h3>'+top.map(p=>`<div class="hint" style="font-size:.85rem;padding:3px 0">${esc(p.name)} · 👁 ${p.views} · 💬 ${p.wa}</div>`).join('')+'<div style="height:12px"></div>':'';
   products.forEach(p=>{const e=eff(p);if(e==='vendido')s++;else{e==='apartado'?r++:d++;u+=p.stock;v+=p.stock*p.price}});
-  $('#stats').innerHTML=[[d,'Disponibles'],[r,'Apartados'],[s,'Vendidos'],[u,'Unidades en stock'],[fmt(v),'Valor del inventario'],[products.reduce((a,p)=>a+p.views,0),'Visitas a productos'],[products.reduce((a,p)=>a+p.wa,0),'Clics a WhatsApp']]
+  $('#stats').innerHTML=[[d,'Disponibles'],[r,'Apartados'],[s,'Vendidos'],[u,'Unidades en stock'],[fmt(v),'Valor del inventario'],[products.reduce((a,p)=>a+p.views,0),'Visitas a productos'],[products.reduce((a,p)=>a+p.likes,0),'Me gusta'],[products.reduce((a,p)=>a+p.wa,0),'Clics a WhatsApp']]
     .map(([a,b])=>`<div class="stat"><b>${a}</b><small>${b}</small></div>`).join('');
 }
 
@@ -754,7 +847,6 @@ function specsHTML(txt){
 async function openDetail(p){
   const st=eff(p),sold=st==='vendido',url=`${base()}#p=${p.id}`;
   const disc=p.old>p.price?Math.round((1-p.price/p.old)*100):0;
-  const msg=encodeURIComponent(`¡Hola! Me interesa "${p.name}" (${fmt(p.price)}).\n${url}`);
   const specs=specsHTML(p.chars);
   $('#detBody').innerHTML=`
    <div class="gal"><div class="slider" id="slider">${p.thumb?`<img src="${esc(p.thumb)}" alt="">`:'<div class="im"><div class="ph">📦</div></div>'}</div><div class="thumbs" id="thumbs" style="display:none"></div></div>
@@ -764,8 +856,8 @@ async function openDetail(p){
     <h2>${esc(p.name)}</h2>
     <div class="pr"><b>${fmt(p.price)}</b>${disc?`<s>${fmt(p.old)}</s><span class="off">${disc}% OFF</span>`:''}</div>
     ${sold?'':`<div style="font-size:.9rem;color:${p.stock<=3?'var(--warn)':'var(--ok)'};font-weight:700">${p.stock<=3?`¡Quedan solo ${p.stock}!`:`${p.stock} unidades disponibles`}</div>`}
-    ${sold?'':dlvHTML(p.delivery,p.dnote)}
-    ${sold?'<span class="bigwa dis">Este artículo ya se vendió</span>':`<a class="bigwa" id="waMain" href="#" target="_blank" rel="noopener"><svg class="ic" style="font-size:22px"><use href="#i-wa"/></svg> ${st==='apartado'?'Preguntar por WhatsApp':'Comprar por WhatsApp'}</a>`}
+    ${sold?'':dlvHTML(p)}
+    ${sold?'<span class="bigwa dis">Este artículo ya se vendió</span>':`<a class="bigwa" id="waMain" href="#" target="_blank" rel="noopener"><svg class="ic" style="font-size:22px"><use href="#i-wa"/></svg> <span class="lbl">${st==='apartado'?'Preguntar por WhatsApp':'Comprar por WhatsApp'}</span></a>`}
     <button class="sh" id="favDet"></button>
     <div class="shrow"><span>Compartir:</span>
      <a class="shi wa" id="shWa" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp"><svg class="ic"><use href="#i-wa"/></svg></a>
@@ -783,8 +875,11 @@ async function openDetail(p){
   $('#shWa').href='https://wa.me/?text='+encodeURIComponent(`${p.name} - ${fmt(p.price)}\n${url}`);
   $('#shFb').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
   const waA=$('#waMain');
-  if(waA){const upd=()=>{waA.href=`https://wa.me/${WA}?text=`+encodeURIComponent(`¡Hola! Me interesa "${p.name}" (${fmt(p.price)}).\n${dlvLine(p.delivery)}\n${url}`)};
-    upd();bindDlv($('#detBody'),upd);waA.onclick=()=>bump(p.id,'waClicks')}
+  if(waA){const label=st==='apartado'?'Preguntar por WhatsApp':'Comprar por WhatsApp';
+    const upd=()=>{const ok=dlvReady(p);waA.classList.toggle('need',!ok);
+      waA.querySelector('.lbl').textContent=ok?label:'Elige cómo lo recibes ↑';
+      waA.href=ok?`https://wa.me/${WA}?text=`+encodeURIComponent(`¡Hola! Me interesa "${p.name}" (${fmt(p.price)}).\n${dlvText(p)}`):'#'};
+    upd();bindDlv($('#detBody'),upd);waA.onclick=()=>{if(dlvReady(p))bump(p.id,'waClicks')}}
   $('#shBtn').onclick=async()=>{
     try{if(navigator.share)await navigator.share({title:p.name,text:`${p.name} · ${fmt(p.price)}`,url});
       else{await navigator.clipboard.writeText(url);toast('Enlace copiado','ok')}}catch(e){}};
@@ -829,7 +924,8 @@ async function openForm(p){
   $('#pName').value=p?p.name:'';$('#pDesc').value=p?p.desc:'';$('#pChars').value=p?p.chars:'';
   $('#pPrice').value=p?p.price:'';$('#pOld').value=p&&p.old?p.old:'';$('#pStock').value=p?p.stock:1;
   $('#pCat').value=p?p.category:'tecnologia';$('#pCond').value=p?p.condition:'nuevo';$('#pStatus').value=p?eff(p):'disponible';
-  $('#pDeliv').checked=p?p.delivery:true;$('#pDelivNote').value=p?p.dnote:'';
+  $('#pDType').value=p?p.dtype:'costo';$('#pDCost').value=p&&p.dcost?p.dcost:'';$('#pDelivNote').value=p?p.dnote:'';
+  $('#dcWrap').style.display=$('#pDType').value==='costo'?'flex':'none';
   $('#pQual').value=p&&p.quality?p.quality:5;$('#qWrap').style.display=$('#pCond').value==='usado'?'flex':'none';
   drawPrevs();$('#mForm').classList.add('on');
   if(p){fImgs=[...await getImages(p)];drawPrevs()}
@@ -843,7 +939,7 @@ $('#fProd').onsubmit=async e=>{
     const data={name:$('#pName').value.trim(),description:$('#pDesc').value.trim(),characteristics:$('#pChars').value.trim(),
       price:Math.max(0,parseInt($('#pPrice').value)||0),oldPrice:Math.max(0,parseInt($('#pOld').value)||0),
       category:$('#pCat').value,condition:$('#pCond').value,quality:$('#pCond').value==='usado'?+$('#pQual').value:0,
-      stock:status==='vendido'?0:stock,status,delivery:$('#pDeliv').checked,deliveryNote:$('#pDelivNote').value.trim(),updatedAt:TS()};
+      stock:status==='vendido'?0:stock,status,delivery:$('#pDType').value!=='no',deliveryType:$('#pDType').value,deliveryCost:$('#pDType').value==='costo'?Math.max(0,parseInt($('#pDCost').value)||0):0,deliveryNote:$('#pDelivNote').value.trim(),updatedAt:TS()};
     const ref=editing?PROD.doc(editing.id):PROD.doc();
     if(dirty||!editing){
       data.thumb=fImgs[0]?await resize(fImgs[0],480,.7):'';
