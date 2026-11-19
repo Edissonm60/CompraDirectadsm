@@ -298,7 +298,12 @@ body.canInstall .instbtn{display:inline-block}
 .starsbig{display:inline-block;position:relative;font-size:1.25rem;letter-spacing:2px;line-height:1;color:#d5dae6;vertical-align:middle}
 .starsbig i{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap;color:#f59e0b;font-style:normal}
 .rev .via{font-size:.75rem;font-weight:700;color:var(--brand);background:#eaf0ff;border-radius:999px;padding:3px 10px;align-self:flex-start}
-.rev img.cap{cursor:zoom-in;height:auto;max-height:260px;object-fit:contain;background:#f3f5fa}
+.rev img.cap{cursor:zoom-in;height:120px;object-fit:cover;background:#f3f5fa}
+.rev{flex:0 0 250px !important;padding:12px !important;gap:6px !important}
+.rev p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:.86rem}
+.rev .rsub{font-size:.75rem;color:var(--mut);font-weight:600}
+.linkbox{background:#f3f5fa;border-radius:12px;padding:12px;font-size:.8rem;word-break:break-all;margin:10px 0}
+.cstep{display:flex;flex-direction:column;gap:6px}
 .soldvia{font-weight:700;color:var(--bad);font-size:.78rem}
 #mImg .box{background:transparent;box-shadow:none;max-width:900px;padding:0}
 #mImg img{width:100%;border-radius:12px;background:#fff}
@@ -520,13 +525,35 @@ body.canInstall .instbtn{display:inline-block}
  <form id="fSold2">
   <div class="f"><label>¿Por qué medio se vendió?</label><select id="sVia">
    <option value="WhatsApp">WhatsApp</option><option value="TikTok">TikTok</option><option value="Facebook">Facebook</option><option value="Instagram">Instagram</option><option value="En el negocio">En el negocio</option><option value="Otro">Otro</option></select></div>
-  <div class="f"><label>Calificación del cliente (opcional)</label>
-   <div class="starpick" id="sPick"><button type="button" data-v="1">★</button><button type="button" data-v="2">★</button><button type="button" data-v="3">★</button><button type="button" data-v="4">★</button><button type="button" data-v="5">★</button></div><input type="hidden" id="sStars" value="0"></div>
-  <div class="f"><label>Nombre del cliente (opcional)</label><input id="sCli" maxlength="40" placeholder="Ej: Carlos P."></div>
-  <div class="f"><label>Comentario del cliente (opcional)</label><textarea id="sText" maxlength="400" rows="3"></textarea></div>
-  <div class="f"><label>Captura o foto del comentario (opcional)</label><input type="file" id="sFile" accept="image/*"></div>
   <div class="err" id="sErr"></div>
   <button class="btn pri" style="width:100%" type="submit" id="sSave">Marcar como vendido</button>
+ </form>
+ <div id="sLinkWrap" style="display:none">
+  <p><b>Listo.</b> Envíale este enlace al cliente para que califique el producto y tu atención y deje su comentario con foto:</p>
+  <div class="linkbox" id="sLink"></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+   <button class="btn pri" type="button" id="sCopy">📋 Copiar enlace</button>
+   <button class="btn" type="button" id="sWa" style="background:#25D366;color:#fff;border:0">Enviar por WhatsApp</button>
+  </div>
+ </div>
+</div></div>
+
+<!-- Calificación del cliente (por enlace) -->
+<div class="modal" id="mClient"><div class="box">
+ <button class="x" data-close>&times;</button>
+ <div id="cMsg" class="hint" style="padding:20px 0;text-align:center">Cargando…</div>
+ <form id="fClient" style="display:none">
+  <h2>⭐ ¡Gracias por tu compra!</h2>
+  <p class="hint" id="cProd" style="margin-bottom:12px"></p>
+  <div class="f"><label>¿Qué tal el producto?</label>
+   <div class="starpick" data-for="cP"><button type="button" data-v="1">★</button><button type="button" data-v="2">★</button><button type="button" data-v="3">★</button><button type="button" data-v="4">★</button><button type="button" data-v="5">★</button></div><input type="hidden" id="cP" value="0"></div>
+  <div class="f"><label>¿Qué tal la atención?</label>
+   <div class="starpick" data-for="cS"><button type="button" data-v="1">★</button><button type="button" data-v="2">★</button><button type="button" data-v="3">★</button><button type="button" data-v="4">★</button><button type="button" data-v="5">★</button></div><input type="hidden" id="cS" value="0"></div>
+  <div class="f"><label>Tu nombre</label><input id="cName" required maxlength="40" placeholder="Ej: Carlos P."></div>
+  <div class="f"><label>Tu comentario</label><textarea id="cText" required minlength="5" maxlength="400" rows="3" placeholder="Cuéntanos cómo te fue"></textarea></div>
+  <div class="f"><label>Foto (opcional)</label><input type="file" id="cFile" accept="image/*"></div>
+  <div class="err" id="cErr"></div>
+  <button class="btn pri" style="width:100%" type="submit" id="cSave">Publicar mi calificación</button>
  </form>
 </div></div>
 
@@ -640,7 +667,7 @@ function cardHTML(p){
      <button data-act="st" data-v="disponible" class="${st==='disponible'?'on':''}">Disponible</button>
      <button data-act="st" data-v="apartado" class="${st==='apartado'?'on':''}">Apartado</button>
      <button data-act="st" data-v="vendido" class="${st==='vendido'?'on':''}">Vendido</button></div>
-    <div class="arow"><button class="btn" data-act="edit">✏️ Editar</button><button class="btn dng" data-act="del">🗑️</button></div></div>`:'';
+    <div class="arow">${st==='vendido'?'<button class="btn" data-act="rlink">⭐ Pedir calificación</button>':''}<button class="btn" data-act="edit">✏️ Editar</button><button class="btn dng" data-act="del">🗑️</button></div></div>`:'';
   return `<article class="card ${sold?'off':''}" data-id="${esc(p.id)}">
    <div class="im" data-act="open">${p.thumb?`<img src="${esc(p.thumb)}" alt="${esc(p.name)}" loading="lazy" decoding="async">`:'<div class="ph">📦</div>'}${rib}<button class="fav ${favs.has(p.id)?'on':''}" data-act="fav" aria-label="Guardar en favoritos">♥${p.likes>0?`<small>${p.likes}</small>`:''}</button></div>
    <div class="cb">
@@ -780,7 +807,7 @@ function renderReviews(){
     const d=tms(r.createdAt)?new Date(tms(r.createdAt)).toLocaleDateString('es-CO',{day:'numeric',month:'short',year:'numeric'}):'';
     return `<article class="rev">${r.photo?`<img class="cap" data-zoom="1" src="${esc(r.photo)}" alt="Comentario del cliente" loading="lazy">`:''}
     ${r.via?`<span class="via">Compró por ${esc(r.via)}${r.product?' · '+esc(r.product):''}</span>`:''}
-    ${r.stars>0?`<div class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</div>`:''}${r.text?`<p>${esc(r.text)}</p>`:''}<b>${esc(r.name||'Cliente')}</b><span class="rdate">${d}</span>
+    ${r.stars>0?`<div class="stars">${'★'.repeat(n)}${'☆'.repeat(5-n)}</div>`:''}${r.starsP?`<span class="rsub">Producto ${r.starsP}★ · Atención ${r.starsS}★</span>`:''}${r.text?`<p>${esc(r.text)}</p>`:''}<b>${esc(r.name||'Cliente')}</b><span class="rdate">${d}</span>
     ${adminMode()?`<button class="rdel" data-id="${esc(r.id)}">Eliminar</button>`:''}</article>`}).join('');
 }
 $('#revRow').addEventListener('click',async e=>{
@@ -863,6 +890,7 @@ $('#grid').addEventListener('click',async e=>{
     else if(act==='dec'){const n=Math.max(0,p.stock-1),u={stock:n,updatedAt:TS()};if(n===0)u.status='vendido';await PROD.doc(p.id).update(u);if(n===0)toast('Última unidad: marcado como vendido','ok')}
     else if(act==='st'&&el.dataset.v==='vendido'&&eff(p)!=='vendido')return openSold(p);
     else if(act==='st'){const v=el.dataset.v,u={status:v,updatedAt:TS()};if(v==='vendido')u.stock=0;else if(p.stock<=0)u.stock=1;await PROD.doc(p.id).update(u)}
+    else if(act==='rlink') return openSold(p,true);
     else if(act==='edit') openForm(p);
     else if(act==='del'){if(!confirm(`¿Eliminar "${p.name}"? No se puede deshacer.`))return;
       await Promise.all([PROD.doc(p.id).delete(),IMGS.doc(p.id).delete()]);toast('Producto eliminado','ok')}
@@ -973,21 +1001,65 @@ async function openForm(p){
   if(p){fImgs=[...await getImages(p)];drawPrevs()}
 }
 $('#btnNew').onclick=()=>openForm(null);
-/* ============ REGISTRAR VENTA ============ */
-let soldP=null;
-const setSS=v=>{$('#sStars').value=v;document.querySelectorAll('#sPick button').forEach(b=>b.classList.toggle('on',+b.dataset.v<=v))};
-$('#sPick').onclick=e=>{const b=e.target.closest('button');if(b)setSS(+b.dataset.v===+$('#sStars').value?0:+b.dataset.v)};
-function openSold(p){soldP=p;$('#fSold2').reset();setSS(0);$('#sName').textContent=p.name;$('#sErr').style.display='none';$('#mSold').classList.add('on')}
+/* ============ REGISTRAR VENTA + ENLACE PARA EL CLIENTE ============ */
+let soldP=null,soldLink='';
+const rndTok=()=>Array.from(crypto.getRandomValues(new Uint8Array(8)),x=>x.toString(16).padStart(2,'0')).join('');
+async function getRLink(p){
+  const q=await db.collection('rlinks').where('productId','==',p.id).limit(1).get();
+  if(!q.empty)return q.docs[0].id;
+  const t=rndTok();await db.collection('rlinks').doc(t).set({productId:p.id,createdAt:TS()});return t;
+}
+async function showLink(p){
+  const t=await getRLink(p);soldLink=`${base()}#r=${p.id}.${t}`;
+  $('#sLink').textContent=soldLink;$('#fSold2').style.display='none';$('#sLinkWrap').style.display='block';
+}
+async function openSold(p,linkOnly){
+  soldP=p;$('#fSold2').reset();$('#sName').textContent=p.name;$('#sErr').style.display='none';
+  $('#fSold2').style.display=linkOnly?'none':'block';$('#sLinkWrap').style.display='none';$('#mSold').classList.add('on');
+  if(linkOnly){try{await showLink(p)}catch(er){console.error(er);toast('No se pudo crear el enlace','err')}}
+}
 $('#fSold2').onsubmit=async e=>{
   e.preventDefault();const b=$('#sSave');b.disabled=true;b.textContent='Guardando...';
   try{
-    const via=$('#sVia').value,st=+$('#sStars').value,txt=$('#sText').value.trim(),f=$('#sFile').files[0],cli=$('#sCli').value.trim();
-    await PROD.doc(soldP.id).update({status:'vendido',stock:0,soldVia:via,soldAt:TS(),updatedAt:TS()});
-    if(st>0||txt||f)await db.collection('reviews').add({name:cli||'Cliente',text:txt,stars:st,photo:f?await resize(f,900,.75):'',via,product:soldP.name,createdAt:TS()});
-    $('#mSold').classList.remove('on');toast('Venta registrada ✅','ok');
+    await PROD.doc(soldP.id).update({status:'vendido',stock:0,soldVia:$('#sVia').value,soldAt:TS(),updatedAt:TS()});
+    await showLink(soldP);toast('Venta registrada ✅','ok');
   }catch(er){console.error(er);const m=$('#sErr');m.textContent='No se pudo guardar: '+(er.message||er);m.style.display='block'}
   finally{b.disabled=false;b.textContent='Marcar como vendido'}
 };
+$('#sCopy').onclick=async()=>{try{await navigator.clipboard.writeText(soldLink);toast('Enlace copiado','ok')}catch(e){prompt('Copia el enlace:',soldLink)}};
+$('#sWa').onclick=()=>window.open('https://wa.me/?text='+encodeURIComponent(`¡Gracias por tu compra en Compra Directa DSM! 🙌 Cuéntanos cómo te fue con "${soldP.name}" y con nuestra atención, calificando aquí:\n${soldLink}`),'_blank');
+
+/* ---- Calificación del cliente (enlace #r=PRODUCTO.TOKEN) ---- */
+document.addEventListener('click',e=>{const b=e.target.closest('.starpick[data-for] button');if(!b)return;
+  const w=b.parentElement,v=+b.dataset.v;$('#'+w.dataset.for).value=v;w.querySelectorAll('button').forEach(x=>x.classList.toggle('on',+x.dataset.v<=v))});
+let cRate=null;
+async function openClientRate(){
+  const m=location.hash.match(/^#r=([A-Za-z0-9_-]+)\.([a-f0-9]+)$/);if(!m)return;
+  cRate={pid:m[1],tok:m[2]};$('#fClient').style.display='none';$('#cMsg').style.display='block';$('#cMsg').textContent='Cargando…';$('#mClient').classList.add('on');
+  try{
+    const [pd,rd]=await Promise.all([PROD.doc(cRate.pid).get(),db.collection('reviews').doc(cRate.tok).get()]);
+    if(!pd.exists){$('#cMsg').textContent='Este enlace no es válido.';return}
+    if(rd.exists){$('#cMsg').textContent='Ya recibimos tu calificación. ¡Muchas gracias! 💙';return}
+    cRate.name=pd.data().name||'';cRate.via=pd.data().soldVia||'';
+    $('#cProd').textContent='Compraste: '+cRate.name;$('#cMsg').style.display='none';
+    $('#fClient').reset();document.querySelectorAll('#fClient .starpick button').forEach(x=>x.classList.remove('on'));$('#cErr').style.display='none';$('#fClient').style.display='block';
+  }catch(er){console.error(er);$('#cMsg').textContent='No se pudo cargar. Revisa tu conexión e inténtalo de nuevo.'}
+}
+$('#fClient').onsubmit=async e=>{
+  e.preventDefault();const m=$('#cErr'),a=+$('#cP').value,c=+$('#cS').value;
+  if(!a||!c){m.textContent='Califica el producto y la atención (1 a 5 estrellas).';m.style.display='block';return}
+  const b=$('#cSave');b.disabled=true;b.textContent='Publicando...';
+  try{
+    const f=$('#cFile').files[0];
+    await db.collection('reviews').doc(cRate.tok).set({token:cRate.tok,productId:cRate.pid,product:cRate.name,via:cRate.via,
+      name:$('#cName').value.trim().slice(0,40),text:$('#cText').value.trim().slice(0,400),stars:Math.round((a+c)/2),starsP:a,starsS:c,
+      photo:f?await resize(f,900,.7):'',createdAt:TS()});
+    $('#fClient').style.display='none';$('#cMsg').style.display='block';$('#cMsg').textContent='¡Gracias! Tu calificación ya es visible en la tienda. 💙';
+    history.replaceState(null,'',base());
+  }catch(er){console.error(er);m.textContent='No se pudo publicar. Inténtalo de nuevo.';m.style.display='block'}
+  finally{b.disabled=false;b.textContent='Publicar mi calificación'}
+};
+openClientRate();
 $('#fProd').onsubmit=async e=>{
   e.preventDefault();const btn=$('#fSave');btn.disabled=true;btn.textContent='Guardando...';
   try{
@@ -1069,6 +1141,7 @@ $('#logo').addEventListener('click',e=>{
 function handleHash(){
   const h=location.hash;
   if(h==='#admin')openLogin();
+  else if(h.startsWith('#r='))openClientRate();
   else if(h.startsWith('#p=')){const p=products.find(x=>x.id===h.slice(3));if(p)openDetail(p)}
 }
 window.addEventListener('hashchange',handleHash);
