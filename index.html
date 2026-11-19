@@ -6,6 +6,13 @@
 <title>Compra Directa DSM · Tienda de artículos nuevos y usados</title>
 <meta name="description" content="Compra directa, soluciones confiables. Tecnología, hogar, mascotas y más: artículos nuevos y usados.">
 <meta name="theme-color" content="#1e5bff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Compra DSM">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Compra Directa DSM · Nuevos y usados">
 <meta property="og:description" content="Mira fotos, características y precios. Compra directa por WhatsApp, con opción de domicilio.">
@@ -285,6 +292,8 @@ button.cwa:hover{background:var(--brand2)}
 .starpick button{border:0;background:none;color:#d5dae6;cursor:pointer;padding:0 2px}
 .starpick button.on{color:#f59e0b}
 .revempty{flex:1;background:#fff;border-radius:var(--r);padding:18px;color:var(--mut);box-shadow:var(--sh)}
+.instbtn{border:0;background:var(--sun);color:#111;font:inherit;font-weight:800;border-radius:999px;padding:6px 14px;cursor:pointer;display:none}
+body.canInstall .instbtn{display:inline-block}
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -305,7 +314,7 @@ button.cwa:hover{background:var(--brand2)}
  <div class="wrap trow">
   <a class="logo" id="logo" href="#" role="button"><span class="lg">🛍️</span><span><b>Compra Directa</b><i>DSM · Nuevos y usados</i></span></a>
   <form class="sbar" id="sform"><input id="q" type="search" placeholder="Buscar celulares, hogar, mascotas..." autocomplete="off"><button type="submit" aria-label="Buscar">🔍</button></form>
-  <button class="favbtn" id="favBtn" aria-label="Mis favoritos">♥ <span id="favN">0</span></button>
+  <button class="favbtn" id="favBtn" aria-label="Mis favoritos" title="Mis favoritos (guardados en este dispositivo)">♥ <span id="favN">0</span></button>
   <div class="soc topsoc">
    <a class="ig" href="https://instagram.com/compradirectadsm" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ic"><use href="#i-ig"/></svg></a>
    <a class="fb" href="https://www.facebook.com/share/1J6D3iMdPd/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ic"><use href="#i-fb"/></svg></a>
@@ -331,7 +340,7 @@ button.cwa:hover{background:var(--brand2)}
  <div class="wrap">
   <h1>Artículos <em>nuevos y usados</em> al mejor precio</h1>
   <p>Mira las fotos, características y precios. Cuando algo te guste, escríbenos por WhatsApp y lo separamos.</p>
-  <div class="trust"><span>✅ Nuevos y usados</span><span>💬 Atención directa por WhatsApp</span><span>🚚 Domicilios en Bogotá</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cra.+12+Bis+%2334C-17%2C+Bogot%C3%A1%2C+Colombia" target="_blank" rel="noopener">📍 Cra. 12 Bis #34C-17, Bogotá</a></div>
+  <div class="trust"><span>✅ Nuevos y usados</span><span>💬 Atención directa por WhatsApp</span><span>🚚 Domicilios en Bogotá</span><button type="button" id="btnInstall" class="instbtn">📲 Instalar app</button><a href="https://www.google.com/maps/search/?api=1&amp;query=Cra.+12+Bis+%2334C-17%2C+Bogot%C3%A1%2C+Colombia" target="_blank" rel="noopener">📍 Cra. 12 Bis #34C-17, Bogotá</a></div>
  </div>
 </section>
 
@@ -1023,6 +1032,19 @@ document.addEventListener('click',e=>{
   else if(e.target.classList.contains('modal'))closeModal(e.target);
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal.on').forEach(closeModal);fOpen(false)}});
+
+/* ===== Instalar como app ===== */
+let instEv=null;
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEv=e;document.body.classList.add('canInstall')});
+window.addEventListener('appinstalled',()=>{instEv=null;document.body.classList.remove('canInstall');toast('¡App instalada!','ok')});
+if(isIOS&&!isStandalone())document.body.classList.add('canInstall');
+$('#btnInstall').onclick=async()=>{
+  if(instEv){instEv.prompt();try{await instEv.userChoice}catch(e){}instEv=null;document.body.classList.remove('canInstall')}
+  else alert(isIOS?'Para instalar: toca el botón Compartir (cuadro con flecha) de Safari y elige "Agregar a pantalla de inicio".':'Abre el menú del navegador (⋮) y elige "Instalar app" o "Agregar a pantalla de inicio".');
+};
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 $('#yr').textContent=new Date().getFullYear();
 render();
 </script>
